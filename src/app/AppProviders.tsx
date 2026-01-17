@@ -4,7 +4,6 @@ import { queryClient } from './queryClient';
 import { RootNavigator } from './navigation/RootNavigator';
 
 export function AppProviders() {
-  console.log('AppProviders');
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
