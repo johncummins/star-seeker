@@ -1,20 +1,27 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Text } from 'react-native';
+import GatesScreen from '../../features/gates/screens/GatesScreen';
+import CalculatorScreen from '../../features/calculator/screens/CalculatorScreen';
+import RoutesScreen from '../../features/routes/screens/RoutesScreen';
 
-const Tab = createBottomTabNavigator();
+export type RootTabParamList = {
+  Gates: undefined;
+  Calculator: undefined;
+  Routes: undefined;
+};
+
+const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export function RootNavigator() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={Placeholder} />
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Tab.Screen name="Gates" component={GatesScreen} />
+      <Tab.Screen name="Calculator" component={CalculatorScreen} />
+      <Tab.Screen name="Routes" component={RoutesScreen} />
     </Tab.Navigator>
   );
 }
 
-function Placeholder() {
-  return (
-    <View>
-      <Text>Placeholder</Text>
-    </View>
-  );
-}
+
