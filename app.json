@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name": "star-seeker",
+    "slug": "star-seeker",
+    "version": "1.0.0",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true
+  }
+}
