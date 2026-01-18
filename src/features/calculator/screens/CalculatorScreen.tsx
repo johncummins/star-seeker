@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Keyboard } from 'react-native';
+import { View, Text, TextInput, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Keyboard } from 'react-native';
 import Screen from '../../../components/Screen';
 import { theme } from '../../../theme/theme';
 import { useTransport } from '../hooks/useTransport';
 import LoadingState from '../../../components/LoadingState';
 import ErrorState from '../../../components/ErrorState';
+import ResultCard from '../../../components/ResultCard';
+import Button from '../../../components/Button';
 
 export default function CalculatorScreen() {
   const [distance, setDistance] = useState('');
@@ -31,7 +33,7 @@ export default function CalculatorScreen() {
 
   return (
     <Screen>
-      <Text style={styles.heading}>Journey Cost Calculator</Text>
+      <Text style={styles.heading}>Transport Cost Calculator</Text>
       <Text style={styles.subtitle}>Calculate the cheapest transport option</Text>
 
       <KeyboardAvoidingView
@@ -76,15 +78,12 @@ export default function CalculatorScreen() {
               />
             </View>
 
-            <TouchableOpacity
-              style={[styles.button, !hasAllInputs && styles.buttonDisabled]}
+            <Button
               onPress={handleCalculate}
-              disabled={!hasAllInputs || isLoading}
-            >
-              <Text style={styles.buttonText}>
-                {isLoading ? 'Calculating...' : 'Calculate'}
-              </Text>
-            </TouchableOpacity>
+              disabled={!hasAllInputs}
+              loading={isLoading}
+              label="Calculate"
+            />
           </View>
 
           {isLoading && <LoadingState message="Calculating..." />}
@@ -92,18 +91,12 @@ export default function CalculatorScreen() {
           {error && <ErrorState message={error?.message || 'Failed to calculate transport cost'} />}
 
           {transportData && !isLoading && !error && (
-            <View>
-              <Text style={styles.resultLabel}>Cheapest Option</Text>
-              <View style={styles.resultCard}>
-                <Text style={styles.resultVehicle}>{transportData.recommendedTransport.name}</Text>
-                <View style={styles.costSection}>
-                  <Text style={styles.resultCost}>{transportData.currency} {totalCost?.toFixed(2)}</Text>
-                  <Text style={styles.resultBreakdown}>
-                    Journey: {transportData.currency} {transportData.journeyCost.toFixed(2)} • Parking: {transportData.currency} {transportData.parkingFee.toFixed(2)}
-                  </Text>
-                </View>
-              </View>
-            </View>
+            <ResultCard
+              label="Cheapest Option"
+              title={transportData.recommendedTransport.name}
+              cost={`${transportData.currency} ${totalCost?.toFixed(2)}`}
+              breakdown={`Journey: ${transportData.currency} ${transportData.journeyCost.toFixed(2)} | Parking: ${transportData.currency} ${transportData.parkingFee.toFixed(2)}`}
+            />
           )}
         </ScrollView>
       </KeyboardAvoidingView>
@@ -147,54 +140,5 @@ const styles = StyleSheet.create({
     borderRadius: theme.radius.md,
     padding: theme.spacing.md,
     fontSize: 16,
-  },
-  button: {
-    backgroundColor: theme.colors.primary,
-    borderRadius: theme.radius.md,
-    padding: theme.spacing.md,
-    alignItems: 'center',
-    marginTop: theme.spacing.md,
-  },
-  buttonDisabled: {
-    backgroundColor: theme.colors.gray,
-    opacity: 0.5,
-  },
-  buttonText: {
-    color: theme.colors.white,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  resultLabel: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: theme.colors.gray,
-    marginBottom: theme.spacing.sm,
-  },
-  resultCard: {
-    backgroundColor: theme.colors.white,
-    borderRadius: theme.radius.md,
-    padding: theme.spacing.lg,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-  },
-  resultVehicle: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: theme.spacing.md,
-  },
-  costSection: {
-    paddingTop: theme.spacing.md,
-    borderTopWidth: 1,
-    borderTopColor: theme.colors.borderLight,
-  },
-  resultCost: {
-    fontSize: 28,
-    fontWeight: '700',
-    marginBottom: theme.spacing.xs,
-  },
-  resultBreakdown: {
-    fontSize: 13,
-    color: theme.colors.gray,
-    lineHeight: 18,
   },
 });

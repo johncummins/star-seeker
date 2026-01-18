@@ -1,16 +1,13 @@
-export type Gate = {
-  uuid: string;
-  code: string;
-  name: string;
-};
-
 export type GateLink = {
   code: string;
   hu: string;
 };
 
-export type GateDetails = Gate & {
-  links: GateLink[];
+export type Gate = {
+  uuid: string;
+  code: string;
+  name: string;
+  links?: GateLink[];
 };
 
 export type Transport = {
@@ -22,4 +19,11 @@ export type Transport = {
     name: string;
     ratePerAu: number;
   };
+};
+
+export type Route = {
+  from: Gate;
+  route: string[];
+  to: Gate;
+  totalCost: number;
 };

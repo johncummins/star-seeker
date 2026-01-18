@@ -1,12 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GatesStack } from './GatesStack';
+import { RoutesStack } from './RoutesStack';
 import CalculatorScreen from '../../features/calculator/screens/CalculatorScreen';
-import RoutesScreen from '../../features/routes/screens/RoutesScreen';
+import { theme } from '../../theme/theme';
 
 export type RootTabParamList = {
   Gates: undefined;
-  Calculator: undefined;
-  Routes: undefined;
+  Transport: undefined;
+  Route: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -16,10 +17,17 @@ export function RootNavigator() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarLabelStyle: {
+          fontSize: 14,
+        },
+        tabBarStyle: {
+          // setting so the tab content looks centered in the tab, may need testing on other devices
+          paddingTop: theme.spacing.sm,
+        },
       }}>
       <Tab.Screen name="Gates" component={GatesStack} />
-      <Tab.Screen name="Calculator" component={CalculatorScreen} />
-      <Tab.Screen name="Routes" component={RoutesScreen} />
+      <Tab.Screen name="Transport" component={CalculatorScreen} />
+      <Tab.Screen name="Route" component={RoutesStack} />
     </Tab.Navigator>
   );
 }
