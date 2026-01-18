@@ -17,9 +17,10 @@ export default function GateDetailsScreen() {
 
   const { data: gate, isLoading, error } = useGate(gateCode);
 
-  if (isLoading) return <LoadingState message="Loading gate..." />;
+  //Only shows when no cahced data
+  if (isLoading && !gate) return <LoadingState message="Loading gate..." />;
 
-  if (error || !gate) return <ErrorState message="Failed to load gate." />;
+  if (!gate) return <ErrorState message={error?.message || "Failed to load gate"} />;
 
   return (
     <Screen>

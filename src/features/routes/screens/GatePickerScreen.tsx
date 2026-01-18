@@ -23,9 +23,9 @@ export default function GatePickerScreen() {
     navigation.goBack();
   };
 
-  if (isLoading) return <LoadingState message="Loading gates..." />;
-  
-  if (error) return <ErrorState message={error?.message} />;
+  if (isLoading && !gates) return <LoadingState message="Loading gates..." />;
+
+  if (error && !gates) return <ErrorState message={error?.message || 'Failed to load gates'} />;
 
   return (
     <Screen>

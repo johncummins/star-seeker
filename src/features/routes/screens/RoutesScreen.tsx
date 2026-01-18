@@ -88,11 +88,11 @@ export default function RoutesScreen() {
           />
         </View>
 
-        {routeLoading && <LoadingState message="Calculating route..." />}
+        {routeLoading && !route && <LoadingState message="Calculating route..." />}
 
-        {routeError && <ErrorState message={routeError?.message || 'Failed to calculate route'} />}
+        {routeError && !route && <ErrorState message={routeError?.message || 'Failed to calculate route'} />}
 
-        {route && !routeLoading && !routeError && (
+        {route && (
           <ResultCard
             label="Cheapest Route"
             title={`${route.from.code} to ${route.to.code}`}

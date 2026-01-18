@@ -17,9 +17,9 @@ export default function GatesScreen() {
 
   const { data: gates, isLoading, error } = useGates();
 
-  if (isLoading) return <LoadingState message='Loading Gates...'></LoadingState>
+  if (isLoading && !gates) return <LoadingState message='Loading Gates...'></LoadingState>
 
-  if (error) return <ErrorState message={error?.message}></ErrorState>
+  if (error && !gates) return <ErrorState message={error?.message || 'Failed to load gates'}></ErrorState>
 
   return (
     <Screen>

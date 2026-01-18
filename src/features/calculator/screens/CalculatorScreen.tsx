@@ -86,11 +86,11 @@ export default function CalculatorScreen() {
             />
           </View>
 
-          {isLoading && <LoadingState message="Calculating..." />}
+          {isLoading && !transportData && <LoadingState message="Calculating..." />}
 
-          {error && <ErrorState message={error?.message || 'Failed to calculate transport cost'} />}
+          {error && !transportData && <ErrorState message={error?.message || 'Failed to calculate transport cost'} />}
 
-          {transportData && !isLoading && !error && (
+          {transportData && (
             <ResultCard
               label="Cheapest Option"
               title={transportData.recommendedTransport.name}
