@@ -1,6 +1,9 @@
 const BASE_URL = 'https://hstc-api.testing.keyholding.com/';
 const API_KEY = '94962B9A-966C-43FC-8E1A-145DEAA5970C';
 
+// NOTE: API key is hardcoded for the purposes of the technical test.
+// In production this would be provided via environment variables.
+
 async function get<T>(endpoint: string): Promise<T> {
   const response = await fetch(`${BASE_URL}${endpoint}`, {
     headers: {

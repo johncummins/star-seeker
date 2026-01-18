@@ -18,7 +18,7 @@ export default function Screen({ children, style }: ScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.bg,
     padding: theme.spacing.md,
+    paddingBottom: 0
   },
 });

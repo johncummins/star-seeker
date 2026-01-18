@@ -1,39 +1,45 @@
-import { Text, FlatList, StyleSheet } from 'react-native';
+import { Text, FlatList, StyleSheet, View } from 'react-native';
 import { useGates } from '../hooks/useGates';
 import { GateRow } from '../components/GateRow';
 import Screen from '../../../components/Screen'
-import { theme } from '../../../theme/theme'
+import LoadingState from '../../../components/LoadingState';
+import ErrorState from '../../../components/ErrorState';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { GatesStackParamList } from '../../../app/navigation/GatesStack';
+import { theme } from '../../../theme/theme';
+
+type NavigationProp = NativeStackNavigationProp<GatesStackParamList>;
 
 export default function GatesScreen() {
 
-  const { data: gates, isLoading, error, refetch } = useGates();
+  const navigation = useNavigation<NavigationProp>();
 
-  // to do: have a proper loading component
-  if (isLoading) {
-    return <Text>Loading gates…</Text>;
-  }
+  const { data: gates, isLoading, error } = useGates();
 
-  // to do: have a proper error component
-  if (error) {
-    return <Text>Failed to load gates</Text>;
-  }
+  if (isLoading) return <LoadingState message='Loading Gates...'></LoadingState>
+
+  if (error) return <ErrorState message={error?.message}></ErrorState>
 
   return (
     <Screen>
-      <FlatList
-        data={gates}
-        keyExtractor={(gate) => gate.uuid}
-        renderItem={({ item: gate }) => (
-          <GateRow
-            gate={gate}
-            onPress={() => console.log(gate.uuid)}
-          />
-        )}
-        ListHeaderComponent={
-          <Text style={styles.heading}>Available Gates</Text>
-        }
-        ListEmptyComponent={<Text>No gates available</Text>}
-      />
+      <View>
+        <Text style={styles.heading}>Available Gates</Text>
+        <Text style={styles.subtitle}>{gates?.length || 0} gate{gates?.length !== 1 ? 's' : ''} available</Text>
+      </View>
+      <View style={styles.listContainer}>
+        <FlatList
+          data={gates}
+          keyExtractor={(gate) => gate.uuid}
+          renderItem={({ item: gate }) => (
+            <GateRow
+              gate={gate}
+              onPress={() => navigation.navigate('GateDetails', { gateCode: gate.code })}
+            />
+          )}
+          ListEmptyComponent={<Text style={styles.emptyText}>No gates available</Text>}
+        />
+      </View>
     </Screen>
   );
 }
@@ -41,7 +47,26 @@ export default function GatesScreen() {
 
 const styles = StyleSheet.create({
   heading: {
-    fontSize: 30,
-    fontWeight: 'medium',
-  }
+    fontSize: 28,
+    fontWeight: '600',
+    marginBottom: theme.spacing.xs,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: theme.colors.gray,
+    fontWeight: '500',
+    marginBottom: theme.spacing.md,
+  },
+  listContainer: {
+    backgroundColor: '#ffffff',
+    borderRadius: theme.radius.md,
+    overflow: 'hidden',
+    flex: 1,
+  },
+  emptyText: {
+    fontSize: 16,
+    color: theme.colors.gray,
+    textAlign: 'center',
+    paddingVertical: theme.spacing.xl,
+  },
 })

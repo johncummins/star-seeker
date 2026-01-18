@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import GatesScreen from '../../features/gates/screens/GatesScreen';
+import { GatesStack } from './GatesStack';
 import CalculatorScreen from '../../features/calculator/screens/CalculatorScreen';
 import RoutesScreen from '../../features/routes/screens/RoutesScreen';
 
@@ -17,7 +17,7 @@ export function RootNavigator() {
       screenOptions={{
         headerShown: false,
       }}>
-      <Tab.Screen name="Gates" component={GatesScreen} />
+      <Tab.Screen name="Gates" component={GatesStack} />
       <Tab.Screen name="Calculator" component={CalculatorScreen} />
       <Tab.Screen name="Routes" component={RoutesScreen} />
     </Tab.Navigator>
