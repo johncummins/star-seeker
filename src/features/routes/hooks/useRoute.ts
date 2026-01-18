@@ -12,7 +12,5 @@ export function useRoute({ fromGateCode, toGateCode, enabled }: UseRouteParams) 
     queryKey: ['route', fromGateCode, toGateCode],
     queryFn: () => fetchRoute(fromGateCode, toGateCode),
     enabled,
-    staleTime: 60_000,
-    retry: 1,
   });
 }

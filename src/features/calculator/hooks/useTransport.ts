@@ -13,7 +13,7 @@ export function useTransport({ distance, passengers, parking, enabled }: UseTran
     queryKey: ['transport', distance, passengers, parking],
     queryFn: () => fetchTransport(distance, passengers, parking),
     enabled,
-    staleTime: 60_000,
+    staleTime: 60 * 1000,
     retry: 1,
   });
 }

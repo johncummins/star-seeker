@@ -5,7 +5,5 @@ export function useGate(gateCode: string) {
   return useQuery({
     queryKey: ['gate', gateCode],
     queryFn: () => fetchGateDetails(gateCode),
-    staleTime: 60_000,
-    retry: 1,
   });
 }

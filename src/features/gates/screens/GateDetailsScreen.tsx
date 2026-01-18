@@ -23,23 +23,21 @@ export default function GateDetailsScreen() {
 
   return (
     <Screen>
-      {/* Header */}
       <View>
         <Text style={styles.title}>{gate.name}</Text>
         <Text style={styles.code}>{gate.code}</Text>
       </View>
 
-      {/* Links */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Connections</Text>
-        {gate.links.length === 0 ? (
+        {!gate.links || gate.links.length === 0 ? (
           <Text>No connections available.</Text>
         ) : (
           <View style={styles.chips}>
-            {gate.links.map((link: GateLink) => (
+            {gate.links?.map((link: GateLink) => (
               <View key={link.code} style={styles.chip}>
                 <Text style={styles.chipText}>
-                  {link.code}{link.hu ? ` · ${link.hu} HU` : ''}
+                  {link.code}{link.hu ? ` - ${link.hu} HU` : ''}
                 </Text>
               </View>
             ))}

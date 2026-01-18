@@ -5,7 +5,5 @@ export function useGates() {
   return useQuery({
     queryKey: ['gates'],
     queryFn: fetchGates,
-    staleTime: 60_000,
-    retry: 1,
   });
 }
