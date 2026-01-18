@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.md,
   },
   listContainer: {
-    backgroundColor: '#ffffff',
+    backgroundColor: theme.colors.white,
     borderRadius: theme.radius.md,
     overflow: 'hidden',
     flex: 1,

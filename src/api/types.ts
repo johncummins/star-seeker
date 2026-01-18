@@ -12,3 +12,14 @@ export type GateLink = {
 export type GateDetails = Gate & {
   links: GateLink[];
 };
+
+export type Transport = {
+  currency: string;
+  journeyCost: number;
+  parkingFee: number;
+  recommendedTransport: {
+    capacity: number;
+    name: string;
+    ratePerAu: number;
+  };
+};

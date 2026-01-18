@@ -1,10 +1,11 @@
 
 export const theme = {
   colors: {
-    bg: '#f7f7f7',
     primary: '#007AFF',
-    gray: 'gray',
-    danger: '#dc2626',
+    gray: '#666666',
+    white: '#ffffff',
+    border: '#e0e0e0',
+    borderLight: '#f0f0f0',
   },
   spacing: {
     xs: 4,

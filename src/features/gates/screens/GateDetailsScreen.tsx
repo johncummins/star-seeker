@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   },
   chip: {
     paddingHorizontal: theme.spacing.sm,
-    paddingVertical: 6,
+    paddingVertical: theme.spacing.xs,
     borderRadius: theme.radius.sm,
     backgroundColor: theme.colors.primary + '20',
   },
